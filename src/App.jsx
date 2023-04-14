@@ -1,20 +1,19 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
-import { Clicker } from "./components/Clicker";
-import Equipo from "./components/Equipo";
+import { ItemListContainer } from "./components/ItemListContainer/ItemListContainer";
+import { Navbar } from "./components/Navbar/Navbar";
+import { Button } from 'react-bootstrap';
 
 function App() {
 
   return (
-    <div className="App">
-      <h2>Hola Mundo</h2>
-      <hr/>
+    <div>
+      <Navbar />
+      <ItemListContainer saludo={"Hola mundo!"}/>
 
-      {/* <TarjetaPersonal nombre="Martin FIordelisi" edad="25" curso="Python"/>
-      <TarjetaPersonal nombre="Conrado Lanusse" edad="34" curso="ReactJS"/> */}
-      {/* <Equipo /> */}
-      
-      <Clicker />
-  
+      {/* <button className="btn btn-primary">Click me</button> */}
+      <Button variant="success">Click me 2</Button>
+      <Button variant="outline-danger" className='mx-3'>Click me 3</Button>
     </div>
   );
 }
