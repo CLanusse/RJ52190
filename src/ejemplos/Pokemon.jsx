@@ -1,17 +1,9 @@
 import { useState, useEffect } from "react"
+import { useFetch } from "../hooks/useFetch"
 
 
 const Pokemon = ({url}) => {
-    const [pokemon, setPokemon] = useState(null)
-
-    useEffect(() => {
-        fetch(url)
-            .then((resp) => resp.json())
-            .then((data) => {
-                setPokemon(data)
-            })
-            .catch(err => console.log(err))
-    }, [])
+    const { data: pokemon } = useFetch(url)
 
     return (
         <div className="col-3 m-2">
