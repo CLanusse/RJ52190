@@ -8,6 +8,6 @@ export const pedirDatos = () => {   return new Promise((resolve, reject) => {
             // } else {
             //     reject("Promesa rechazada")
             // }
-        }, 3000)
+        }, 1000)
     })
 }

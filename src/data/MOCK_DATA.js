@@ -5,7 +5,8 @@ const MOCK_DATA = [
         precio: 1500,
         img: "https://dummyimage.com/200x200/000000/fff.jpg",
         descripcion: "Lorem ipsum ...",
-        stock: 20
+        stock: 20,
+        category: 'verduleria'
     },
     {
         id: 2,
@@ -13,7 +14,8 @@ const MOCK_DATA = [
         precio: 2500,
         img: "https://dummyimage.com/200x200/000000/fff.jpg",
         descripcion: "Lorem ipsum ...",
-        stock: 20
+        stock: 20,
+        category: 'verduleria'
     },
     {
         id: 3,
@@ -21,7 +23,8 @@ const MOCK_DATA = [
         precio: 3500,
         img: "https://dummyimage.com/200x200/000000/fff.jpg",
         descripcion: "Lorem ipsum ...",
-        stock: 20
+        stock: 20,
+        category: 'carniceria'
     },
     {
         id: 4,
@@ -29,7 +32,8 @@ const MOCK_DATA = [
         precio: 4500,
         img: "https://dummyimage.com/200x200/000000/fff.jpg",
         descripcion: "Lorem ipsum ...",
-        stock: 20
+        stock: 20,
+        category: 'panaderia'
     },
     {
         id: 5,
@@ -37,7 +41,8 @@ const MOCK_DATA = [
         precio: 5500,
         img: "https://dummyimage.com/200x200/000000/fff.jpg",
         descripcion: "Lorem ipsum ...",
-        stock: 20
+        stock: 20,
+        category: 'perfumeria'
     },
     {
         id: 6,
@@ -45,7 +50,8 @@ const MOCK_DATA = [
         precio: 6500,
         img: "https://dummyimage.com/200x200/000000/fff.jpg",
         descripcion: "Lorem ipsum ...",
-        stock: 20
+        stock: 20,
+        category: 'limpieza'
     },
 ]
 
