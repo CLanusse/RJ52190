@@ -2,6 +2,7 @@ import './Navbar.scss'
 import logo from '../../assets/react.svg'
 import CartWidget from '../CartWidget/CartWidget'
 import { Link } from 'react-router-dom'
+import Buscador from '../../ejemplos/Buscador'
 
 export const Navbar = () => {
 
@@ -18,9 +19,12 @@ export const Navbar = () => {
                     <Link to='/productos/carniceria' className="navbar__link">Carniceria</Link>
                     <Link to='/productos/perfumeria' className="navbar__link">Perfumeria</Link>
                     <Link to='/productos/limpieza' className="navbar__link">Limpieza</Link>
+                    <Link to='/asdfasf' className="navbar__link">Roto</Link>
                 </nav>
                 <CartWidget />
             </div>
+
+            <Buscador />
         </header>
     )
 }

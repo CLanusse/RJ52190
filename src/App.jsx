@@ -7,6 +7,7 @@ import Nosotros from './ejemplos/hoc/Nosotros';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { NavbarAlt } from './components/Navbar/NavbarAlt';
 import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailContainer';
+import Error404 from './ejemplos/Error404';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
           <Route path='/nosotros' element={ <Nosotros />}/>
           <Route path='/pokemon' element={ <PokeApi />} />
           <Route path='*' element={ <Navigate to={"/"} /> }/>
+          {/* <Route path='*' element={ <Error404 /> }/> */}
         </Routes>
 
         
