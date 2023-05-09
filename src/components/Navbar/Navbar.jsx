@@ -19,7 +19,8 @@ export const Navbar = () => {
                     <Link to='/productos/carniceria' className="navbar__link">Carniceria</Link>
                     <Link to='/productos/perfumeria' className="navbar__link">Perfumeria</Link>
                     <Link to='/productos/limpieza' className="navbar__link">Limpieza</Link>
-                    <Link to='/asdfasf' className="navbar__link">Roto</Link>
+                    <Link to='/nosotros' className="navbar__link">Nosotros</Link>
+                    {/* <Link to='/asdfasf' className="navbar__link">Roto</Link> */}
                 </nav>
                 <CartWidget />
             </div>

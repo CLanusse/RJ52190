@@ -9,6 +9,7 @@ const Buscador = () => {
     const inputRef = useRef()
 
     const handleSubmit = (e) => {
+        console.log(e)
         e.preventDefault()
 
         const value = inputRef.current.value
