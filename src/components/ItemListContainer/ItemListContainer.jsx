@@ -36,7 +36,7 @@ export const ItemListContainer = () => {
                         ? productos.filter((el) => el.nombre.toLowerCase().includes(search.toLowerCase())) 
                         : productos
 
-    console.log(listado)
+
 
     return (
         <div className="container my-5">

@@ -1,42 +1,47 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import ItemCount from "../ItemCount/ItemCount"
 import SelectTalle from "../../ejemplos/SelectTalle"
+import { CartContext } from "../../context/CartContext"
+import { Link } from "react-router-dom"
 
 
 
-const talles = [
-    {
-        value: "XL",
-        label: "Extra Large"
-    },
-    {
-        value: "L",
-        label: "Large"
-    },
-    {
-        value: "M",
-        label: "Medium"
-    },
-    {
-        value: "S",
-        label: "Small"
-    },
-    {
-        value: "XS",
-        label: "X Small"
-    },
-]
+// const talles = [
+//     {
+//         value: "XL",
+//         label: "Extra Large"
+//     },
+//     {
+//         value: "L",
+//         label: "Large"
+//     },
+//     {
+//         value: "M",
+//         label: "Medium"
+//     },
+//     {
+//         value: "S",
+//         label: "Small"
+//     },
+//     {
+//         value: "XS",
+//         label: "X Small"
+//     },
+// ]
 
 const ItemDetail = ({item}) => {
+    const { agregarAlCarrito, isInCart } = useContext(CartContext)
+
     const [cantidad, setCantidad] = useState(1)
-    const [talle, setTalle] = useState(null)
+    // const [talle, setTalle] = useState(null)
 
     const handleAgregar = () => {
-        console.log({
+        const newItem = {
             ...item,
-            cantidad,
-            talle
-        })
+            cantidad
+        }
+
+        agregarAlCarrito(newItem)
     }
 
     
@@ -49,14 +54,18 @@ const ItemDetail = ({item}) => {
             <p><strong>Precio: ${item.precio}</strong></p>
             <p>Subtotal: {item.precio * cantidad}</p>
 
-            <SelectTalle setTalle={setTalle} options={talles}/>
-
-            <ItemCount
-                cantidad={cantidad}
-                setCantidad={setCantidad}
-                stock={item.stock}
-                agregar={handleAgregar}
-            />
+            {/* <SelectTalle setTalle={setTalle} options={talles}/> */}
+            <br/>
+            {
+                isInCart(item.id)
+                    ? <Link className="btn btn-success" to="/cart">Terminar mi compra</Link>
+                    : <ItemCount
+                        cantidad={cantidad}
+                        setCantidad={setCantidad}
+                        stock={item.stock}
+                        agregar={handleAgregar}
+                    />
+            }
         </div>
     )
 }

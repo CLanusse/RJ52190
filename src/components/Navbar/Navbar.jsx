@@ -2,10 +2,9 @@ import './Navbar.scss'
 import logo from '../../assets/react.svg'
 import CartWidget from '../CartWidget/CartWidget'
 import { Link } from 'react-router-dom'
-import Buscador from '../../ejemplos/Buscador'
+// import Buscador from '../../ejemplos/Buscador'
 
 export const Navbar = () => {
-
     return (
         <header className="header">
             <div className="header__container">
@@ -24,8 +23,7 @@ export const Navbar = () => {
                 </nav>
                 <CartWidget />
             </div>
-
-            <Buscador />
+            {/* <Buscador /> */}
         </header>
     )
 }

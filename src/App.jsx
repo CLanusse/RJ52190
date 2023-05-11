@@ -5,19 +5,15 @@ import { Navbar } from "./components/Navbar/Navbar";
 import PokeApi from './ejemplos/PokeApi';
 import Nosotros from './ejemplos/hoc/Nosotros';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { NavbarAlt } from './components/Navbar/NavbarAlt';
 import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailContainer';
-import Error404 from './ejemplos/Error404';
+import { CartProvider } from './context/CartContext';
+import Cart from './components/Cart/Cart';
 
 function App() {
 
   return (
-    <BrowserRouter>
-        {/* <Routes>
-          <Route path='/pokemon' element={<NavbarAlt />}/>
-          <Route path='*' element={<Navbar />}/>
-        </Routes> */}
-
+    <CartProvider>
+      <BrowserRouter>
         <Navbar />
 
         <Routes>
@@ -26,15 +22,11 @@ function App() {
           <Route path='/detail/:itemId' element={ <ItemDetailContainer /> }/>
           <Route path='/nosotros' element={ <Nosotros />}/>
           <Route path='/pokemon' element={ <PokeApi />} />
+          <Route path='/cart' element={ <Cart/> }/>
           <Route path='*' element={ <Navigate to={"/"} /> }/>
-          {/* <Route path='*' element={ <Error404 /> }/> */}
         </Routes>
-
-        
-
-        {/* <Footer /> */}
-
-    </BrowserRouter>
+      </BrowserRouter>
+    </CartProvider>
   );
 }
 

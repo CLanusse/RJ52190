@@ -1,13 +1,17 @@
-import logo from '../../assets/vite.svg'
-
+import { FaCartPlus } from 'react-icons/fa'
+import './CartWidget.scss'
+import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { CartContext } from '../../context/CartContext'
 
 const CartWidget = () => {
+    const { totalCantidad } = useContext(CartContext)
 
     return (
-        <div>
-            <img src={logo}/>
-            <span>0</span>
-        </div>
+        <Link to="/cart" className='cart-widget'>
+            <FaCartPlus />
+            <span>{totalCantidad()}</span>
+        </Link>
     )
 }
 
