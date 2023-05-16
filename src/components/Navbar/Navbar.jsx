@@ -21,6 +21,7 @@ export const Navbar = () => {
                     <Link to='/nosotros' className="navbar__link">Nosotros</Link>
                     {/* <Link to='/asdfasf' className="navbar__link">Roto</Link> */}
                 </nav>
+                
                 <CartWidget />
             </div>
             {/* <Buscador /> */}

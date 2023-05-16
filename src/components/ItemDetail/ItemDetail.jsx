@@ -1,8 +1,9 @@
-import { useContext, useState } from "react"
+import { useContext, useMemo, useState } from "react"
 import ItemCount from "../ItemCount/ItemCount"
 import SelectTalle from "../../ejemplos/SelectTalle"
 import { CartContext } from "../../context/CartContext"
 import { Link } from "react-router-dom"
+import Memo from "../../ejemplos/Memo"
 
 
 
@@ -30,7 +31,7 @@ import { Link } from "react-router-dom"
 // ]
 
 const ItemDetail = ({item}) => {
-    const { agregarAlCarrito, isInCart } = useContext(CartContext)
+    const { cart, agregarAlCarrito, isInCart } = useContext(CartContext)
 
     const [cantidad, setCantidad] = useState(1)
     // const [talle, setTalle] = useState(null)
@@ -44,6 +45,7 @@ const ItemDetail = ({item}) => {
         agregarAlCarrito(newItem)
     }
 
+    const date = useMemo(() => new Date(), [cart])
     
     return (
         <div>
@@ -55,6 +57,9 @@ const ItemDetail = ({item}) => {
             <p>Subtotal: {item.precio * cantidad}</p>
 
             {/* <SelectTalle setTalle={setTalle} options={talles}/> */}
+            <Memo />
+            {date.toLocaleString()}
+
             <br/>
             {
                 isInCart(item.id)

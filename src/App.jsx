@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailContainer';
 import { CartProvider } from './context/CartContext';
 import Cart from './components/Cart/Cart';
+import Contacto from './components/Contacto/Contacto';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path='/nosotros' element={ <Nosotros />}/>
           <Route path='/pokemon' element={ <PokeApi />} />
           <Route path='/cart' element={ <Cart/> }/>
+          <Route path='/contacto' element={ <Contacto/> }/>
           <Route path='*' element={ <Navigate to={"/"} /> }/>
         </Routes>
       </BrowserRouter>

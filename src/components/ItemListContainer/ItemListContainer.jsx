@@ -36,14 +36,13 @@ export const ItemListContainer = () => {
                         ? productos.filter((el) => el.nombre.toLowerCase().includes(search.toLowerCase())) 
                         : productos
 
-
+    
 
     return (
         <div className="container my-5">
-            {
-                loading
-                    ? <h2>Cargando...</h2>
-                    : <ItemList items={listado}/>
+            {loading 
+                ? <h2>Cargando..</h2>
+                : <ItemList items={listado}/>
             }
         </div>
     )
