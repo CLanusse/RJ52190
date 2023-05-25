@@ -1,44 +1,32 @@
 import { useContext, useState } from "react"
 import { CartContext } from "../../context/CartContext"
 import { Navigate } from 'react-router-dom'
-import { collection, addDoc, doc, updateDoc, getDoc } from "firebase/firestore"
+import { collection, getDoc, addDoc, getDocs, writeBatch, query, where, documentId, doc } from "firebase/firestore"
 import { db } from "../../firebase/config"
 import { Link } from "react-router-dom"
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+
+const schema = Yup.object().shape({
+    nombre: Yup.string()
+                .required("Este campo es requerido")
+                .min(3, "El nombre es muy corto")
+                .max(20, "El nombre es demasiado largo"),
+    direccion: Yup.string()
+                .required("Este campo es requerido")
+                .min(6, "La direccion es muy corta")
+                .max(20, "La direccion es demasiado larga"),
+    email: Yup.string()
+                .email("El email no es válido")
+                .required("Este campo es requerido")
+})
 
 const Checkout = () => {
     const { cart, totalCompra, emptyCart } = useContext(CartContext)
 
-    const [values, setValues] = useState({
-        nombre: '',
-        direccion: '',
-        email: ''
-    })
     const [orderId, setOrderId] = useState(null)
 
-    const handleInput = (e) => {
-        setValues({
-            ...values,
-            [e.target.name]: e.target.value
-        })
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-
-        const { nombre, direccion, email } = values
-
-        if (nombre.length < 3) {
-            alert("El nombre demasiado corto")
-            return
-        }
-        if (direccion.length < 3) {
-            alert("Dirección inválida")
-            return
-        }
-        if (email.length < 5) {
-            alert("Email inválido")
-            return
-        }
+    const generarOrden = async (values) => {
         
         const orden = {
             client: values,
@@ -47,32 +35,48 @@ const Checkout = () => {
             fyh: new Date()
         }
 
-        console.log(orden)
-
-        orden.items.forEach((item) => {
-            const itemRef = doc(db, "productos", item.id)
-
-            getDoc(itemRef)
-                .then((doc) => {
-                    if (doc.data().stock >= item.cantidad) {
-                        updateDoc(itemRef, {
-                            stock: doc.data().stock - item.cantidad
-                        })
-                    } else {
-                        alert("No hay stock de " + item.nombre)
-                    }
-                })
-        })
-
-
-
+        const batch = writeBatch(db)
+        const productosRef = collection(db, "productos")
         const ordersRef = collection(db, "orders")
 
-        // addDoc(ordersRef, orden)
-        //     .then((doc) => {
-        //         setOrderId(doc.id)
-        //         emptyCart()
-        //     })
+        const promesas = cart.map((item) => {
+            const ref = doc(productosRef, item.id)
+            return getDoc(ref)
+        })
+
+        const productos = await Promise.all(promesas)
+
+        // const q = query(productosRef, where( documentId(), "in", cart.map(item => item.id) ))
+        // const productos = await getDocs(q)
+
+        const outOfStock = []
+
+
+        productos.forEach((doc) => {
+            const item = cart.find((i) => i.id === doc.id)
+            const stock = doc.data().stock
+            
+            if (stock >= item.cantidad) {
+                batch.update(doc.ref, {
+                    stock: stock - item.cantidad
+                })
+            } else {
+                outOfStock.push(item)
+            }
+        })
+
+        if (outOfStock.length === 0) {
+            addDoc(ordersRef, orden)
+                .then((doc) => {
+                        batch.commit()
+                        setOrderId(doc.id)
+                        emptyCart()
+                    })
+        } else {
+            console.log(outOfStock)
+            alert("Hay items sin stock")
+        }
+        
     }
 
     if (orderId) {
@@ -97,34 +101,30 @@ const Checkout = () => {
             <h2>Checkout</h2>
             <hr/>
 
-            <form onSubmit={handleSubmit}>
-                <input 
-                    className="form-control my-2"
-                    type="text"
-                    value={values.nombre}
-                    placeholder="Nombre"
-                    name="nombre"
-                    onChange={handleInput}
-                />
-                <input 
-                    className="form-control my-2"
-                    type="text"
-                    value={values.direccion}
-                    placeholder="Dirección"
-                    name="direccion"
-                    onChange={handleInput}
-                />
-                <input 
-                    className="form-control my-2"
-                    type="email"
-                    value={values.email}
-                    placeholder="Email"
-                    name="email"
-                    onChange={handleInput}
-                />
+            <Formik
+                initialValues={{
+                    nombre: '',
+                    direccion: '',
+                    email: ''
+                }}
+                validationSchema={schema}
+                onSubmit={generarOrden}
+            >
+                {() => (
+                    <Form>
+                        <Field name="nombre" type="text" className="form-control my-2"/>
+                        <ErrorMessage name="nombre" component={"p"}/>
+                        <Field name="direccion" type="text" className="form-control my-2"/>
+                        <ErrorMessage name="direccion" component={"p"}/>
+                        <Field name="email" type="email" className="form-control my-2"/>
+                        <ErrorMessage name="email" component={"p"}/>
 
-                <button className="btn btn-primary" type="submit">Enviar</button>
-            </form>
+                        <button className="btn btn-primary" type="submit">Enviar</button>
+                    </Form>
+                )}
+            </Formik>
+
+            
         </div>
     )
 }
